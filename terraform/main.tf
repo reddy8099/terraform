@@ -1,7 +1,7 @@
 
 
 resource "azurerm_storage_account" "sa" {
-  for_each                 = var.storage_account
+  for_each                 = each.storage_account
   name                     = each.value.name
   resource_group_name      = each.value.resource_group_name
   location                 = each.value.location
