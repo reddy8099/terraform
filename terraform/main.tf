@@ -1,6 +1,4 @@
-provider "azurerm" {
-    features {} 
-}
+
 
 resource "azurerm_storage_account" "sa" {
   for_each                 = var.storage_account
