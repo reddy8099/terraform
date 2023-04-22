@@ -2,7 +2,7 @@ resource "azurerm_resource_group" "rg" {
   name     = var.resoiurce_group_name
   location = var.location
 }
-resoiurce "azurerm_role_assigiment" "role_acrpull" {
+resource "azurerm_role_assigiment" "role_acrpull" {
 
     scope                             = azurerm_container_registry.acr.id
     role_definition_name              = "Acrpull"
