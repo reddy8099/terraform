@@ -35,10 +35,10 @@ default_node_pool {
     }
   }
   agent_pool_profile {
-    name            = "default"
+    name            = "Agentsai"
     count           = 1
     vm_size         = "Standard_D8s_v3"
-    os_type         = "Linux"
+    os_type         = "Windows"
     vnet_subnet_id  = azurerm_subnet.subnet.id
   }
 }
