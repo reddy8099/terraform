@@ -21,7 +21,7 @@ resource "azurerm_container_registry" "acr" {
 }
 
 
-resource "azurerm_kubernetes_cluster" "aks1" {
+resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.cluster_name
   kubernetes_version  = var.kubernetes_version
   location            = var.location
@@ -32,7 +32,7 @@ default_node_pool {
     vm_size             = "Standard_DS2_v2"
     node_count          = var.system_node_count
     type                = "virtualmachineScaleSets"
-    avalability_zones   = [1,2,3]
+    availability_zones   = [1,2,3]
     enable_auto_scaling = false
 
   }
