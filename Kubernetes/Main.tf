@@ -31,6 +31,7 @@ default_node_pool {
     vm_size             = "Standard_DS2_v2"
     node_count          = var.system_node_count
     type                = "virtualmachineScaleSets"
+    Availabilty Zones   = [Zones 1,2,3]
     enable_auto_scaling = false
 
   }
