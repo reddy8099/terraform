@@ -6,8 +6,8 @@ resource "azurerm_role_assignment" "role_acrpull" {
 
     scope                             = azurerm_container_registry.acr.id
     role_definition_name              = "Acrpull"
-    principle_id                      = azurerm_kubernetes_cluster.aks.kubelet_identity.0.object_id
-    skip_service_principle_aaa_check  = true
+    principal_id                      = azurerm_kubernetes_cluster.aks.kubelet_identity.0.object_id
+    skip_service_principal_aaa_check  = true
 
 }
 
@@ -31,7 +31,7 @@ default_node_pool {
     vm_size             = "Standard_DS2_v2"
     node_count          = var.system_node_count
     type                = "virtualmachineScaleSets"
-    availability_zones   = "Zones 1,2,3"
+    availability_zones   = "Zone 1"
     enable_auto_scaling = false
 
   }
