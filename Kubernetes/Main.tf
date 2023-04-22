@@ -36,7 +36,7 @@ default_node_pool {
   }
 
   identity {
-    type = "systemAssigned"
+    type = "SystemAssigned"
     
   }
   
