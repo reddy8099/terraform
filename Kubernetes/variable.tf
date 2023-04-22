@@ -26,6 +26,6 @@ variable "system_node_count" {
 }
 variable "acr_name" {
     type = string
-    description = "ACR name"
+    description = "acr name"
 
 }
