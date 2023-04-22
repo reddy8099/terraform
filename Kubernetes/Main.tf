@@ -13,7 +13,7 @@ resource "azurerm_virtual_network" "v-net" {
 resource "azurerm_subnet" "subnet" {
   name                 = "ram-subnet"
   resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
+  virtual_network_name = azurerm_virtual_network.v-net.name
   address_prefixes     = ["10.10.1.0/24"]
 }
 
@@ -37,8 +37,8 @@ default_node_pool {
   agent_pool_profile {
     name            = "default"
     count           = 1
-    vm_size         = "Standard_D2_v2"
+    vm_size         = "Standard_D8s_v3"
     os_type         = "Linux"
-    vnet_subnet_id  = azurerm_subnet.Rami.id
+    vnet_subnet_id  = azurerm_subnet.subnet.id
   }
 }
