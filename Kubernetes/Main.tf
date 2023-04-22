@@ -15,7 +15,7 @@ resource "azurerm_container_registry" "acr" {
   name                = var.acr_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
-  sku                 = "standard"
+  sku                 = "Standard"
   admin_enabled       = false  
   
 }
@@ -31,7 +31,7 @@ default_node_pool {
     vm_size             = "Standard_DS2_v2"
     node_count          = var.system_node_count
     type                = "virtualmachineScaleSets"
-    availability_zones   = [1,2,3]
+    availability_zones   = "Zones 1,2,3"
     enable_auto_scaling = false
 
   }
