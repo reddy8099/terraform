@@ -12,14 +12,13 @@ resource "azurerm_role_assignment" "role_acrpull" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                = {$var.acr.name}
+  name                = var.acr.name
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   sku                 = "standard"
   admin_enabled       = false  
   
 }
-
 
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.cluster_name
