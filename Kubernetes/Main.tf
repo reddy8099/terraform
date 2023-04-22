@@ -1,44 +1,49 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "tf-using-aks"
-  location = "westus2"
+  name     = var.resoiurce_group_name
+  location = var.location
+}
+resoiurce "azurerm_role_assigiment" "role_acrpull" {
+
+    scope                             = azurerm_container_registry.acr.id
+    role_definition_name              = "Acrpull"
+    principle_id                      = azurerm_kubernetes_cluster.aks.kubelet_identity.0.object_id
+    skip_service_principle_aaa_check  = true
+
 }
 
-resource "azurerm_virtual_network" "v-net" {
-  name                = "vnet1"
-  address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.rg.location
+resource "azurerm_container_registry" "acr" {
+  name                = var.acr.name
   resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
+  sku                 = "standard"
+  admin_enabled       = false  
+  
 }
 
-resource "azurerm_subnet" "subnet" {
-  name                 = "ram-subnet"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.v-net.name
-  address_prefixes     = ["10.10.1.0/24"]
-}
 
 resource "azurerm_kubernetes_cluster" "aks1" {
-  name                = "my-aks-cluster"
-  location            = azurerm_resource_group.rg.location
+  name                = var.cluster_name
+  kubernetes_version  = var.kubernetes_version
+  location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = "my-aks-cluster"
+  dns_prefix          = var.cluster_name
 default_node_pool {
-    name       = "agentpool"
-    vm_size    = "Standard_D2_v1"
-    node_count = 2
+    name                = "system"
+    vm_size             = "Standard_DS2_v2"
+    node_count          = var.system_node_count
+    type                = "virtualmachineScaleSets"
+    avalability_zones   = [1,2,3]
+    enable_auto_scaling = false
+
   }
 
-  linux_profile {
-    admin_username = "testuser"
-    ssh_key {
-      key_data = "ssh-rsa AAAAB3Nz..."
-    }
+  identity {
+    type = "systemAssigned"
+    
   }
-  agent_pool_profile {
-    name            = "Agentsai"
-    count           = 1
-    vm_size         = "Standard_D8s_v3"
-    os_type         = "Windows"
-    vnet_subnet_id  = azurerm_subnet.subnet.id
+  
+  network_profile {
+    load_balancer_sku = "standard"
+    network_plugin    = "kubenet"
   }
 }
